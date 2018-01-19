@@ -6,15 +6,15 @@ module.exports = (req, res) => {
     req.tempStorage.addItem(req.body.data)
     
     if (req.tempStorage.getLength() >= 5) {
-        let newBlockEntry = {
+        let newBlockItem = {
             previous_block_hash: req.blockStorage.getLastItemHash(),
             rows: req.tempStorage.getAllItems(),
             timestamp: (new Date).getTime()
         }
         
-        newBlockEntry.block_hash = generateHash(newBlockEntry)
+        newBlockItem.block_hash = generateHash(newBlockItem)
         req.tempStorage.clear()
-        req.blockStorage.addItem(newBlockEntry)
+        req.blockStorage.addItem(newBlockItem)
     }
     
     res.json(req.body)
